@@ -1,4 +1,5 @@
 ﻿using learnDotNetCore.Models;
+using learnDotNetCore.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,15 @@ namespace learnDotNetCore.Controllers
 {
     public class HomeController : Controller
     {
+        private IRestaurantData _restaurantData;
+
+        public HomeController(IRestaurantData restaurantData)
+        {
+            _restaurantData = restaurantData;
+        }
         public IActionResult Index()
         {
-            var model = new Restaurant { Id = 1, Name = "Pizza Place" };
+            var model = _restaurantData.GetAll();
             return View(model);
         }
     }
