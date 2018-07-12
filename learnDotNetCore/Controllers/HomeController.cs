@@ -19,12 +19,19 @@ namespace learnDotNetCore.Controllers
             _restaurantData = restaurantData;
             _greeter = greeter;
         }
+
         public IActionResult Index()
         {
             var model = new HomeIndexViewModel();
             model.Restaurants = _restaurantData.GetAll();
             model.CurrentMessage = _greeter.GetMessageOfTheDay();
 
+            return View(model);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var model = _restaurantData.Get(id);
             return View(model);
         }
     }
