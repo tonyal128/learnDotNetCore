@@ -32,6 +32,10 @@ namespace learnDotNetCore.Controllers
         public IActionResult Details(int id)
         {
             var model = _restaurantData.Get(id);
+            if(model == null)
+            {
+                RedirectToAction(nameof(Index));
+            }
             return View(model);
         }
     }
