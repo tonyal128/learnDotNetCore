@@ -46,15 +46,22 @@ namespace learnDotNetCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ResaurantEditModel model)
+        public IActionResult Create(RestaurantEditModel model)
         {
-            var newRestaurant = new Restaurant();
-            newRestaurant.Name = model.Name;
-            newRestaurant.Cuisine = model.Cuisine;
+            if (ModelState.IsValid)
+            {
+                var newRestaurant = new Restaurant();
+                newRestaurant.Name = model.Name;
+                newRestaurant.Cuisine = model.Cuisine;
 
-            newRestaurant = _restaurantData.Add(newRestaurant);
+                newRestaurant = _restaurantData.Add(newRestaurant);
 
-            return RedirectToAction(nameof(Details),new { id = newRestaurant.Id });
+                return RedirectToAction(nameof(Details), new { id = newRestaurant.Id });
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
