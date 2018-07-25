@@ -39,9 +39,22 @@ namespace learnDotNetCore.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(ResaurantEditModel model)
+        {
+            var newRestaurant = new Restaurant();
+            newRestaurant.Name = model.Name;
+            newRestaurant.Cuisine = model.Cuisine;
+
+            newRestaurant = _restaurantData.Add(newRestaurant);
+
+            return RedirectToAction(nameof(Details),new { id = newRestaurant.Id });
         }
     }
 }
